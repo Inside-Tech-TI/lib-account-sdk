@@ -6,6 +6,7 @@ import {
   InteractionItem,
   IUserAccountDetails,
   IUserCredentials,
+  UserContexts,
   UserInteractions,
 } from "./interface/sdk/IUser";
 import { IContext, IProfile, IResult, IResultData } from "./interface/types";
@@ -31,4 +32,5 @@ export {
   IContext,
   IProfile,
   I2faInfo,
+  UserContexts,
 };
