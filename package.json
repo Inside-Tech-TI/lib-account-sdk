@@ -1,6 +1,6 @@
 {
-  "name": "@inside/account-sdk",
-  "version": "0.1.0",
+  "name": "account-sdk",
+  "version": "0.1.1",
   "description": "Lib to interface account api",
   "scripts": {
     "prepublish": "rm -rf dist/ && npm run build",
