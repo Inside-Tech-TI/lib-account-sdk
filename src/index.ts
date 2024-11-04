@@ -2,6 +2,7 @@ import { IAppSdk } from "./interface/application/IAppSdk";
 import { IAccountSDK } from "./interface/sdk/IAccountSDK";
 import {
   ContextUserInfo,
+  I2faInfo,
   InteractionItem,
   IUserAccountDetails,
   IUserCredentials,
@@ -29,4 +30,5 @@ export {
   UserInteractions,
   IContext,
   IProfile,
+  I2faInfo,
 };
