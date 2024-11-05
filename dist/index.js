@@ -1,6 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppMockSdk = exports.AccountMockSdk = exports.AppSdk = exports.AccountSdk = void 0;
+exports.OTPService = exports.AppMockSdk = exports.AccountMockSdk = exports.AppSdk = exports.AccountSdk = void 0;
+const otpService_1 = __importDefault(require("./modules/otp/otpService"));
+exports.OTPService = otpService_1.default;
 const AccountSdk_1 = require("./sdk/AccountSdk");
 Object.defineProperty(exports, "AccountSdk", { enumerable: true, get: function () { return AccountSdk_1.AccountSdk; } });
 const AppSdk_1 = require("./sdk/AppSdk");
