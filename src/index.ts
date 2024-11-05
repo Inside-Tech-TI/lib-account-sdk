@@ -10,6 +10,7 @@ import {
   UserInteractions,
 } from "./interface/sdk/IUser";
 import { IContext, IProfile, IResult, IResultData } from "./interface/types";
+import OTPService from "./modules/otp/otpService";
 import { AccountSdk } from "./sdk/AccountSdk";
 import { AppSdk } from "./sdk/AppSdk";
 import { AccountMockSdk } from "./sdk/mocks/AccountMockSdk";
@@ -33,4 +34,5 @@ export {
   IProfile,
   I2faInfo,
   UserContexts,
+  OTPService,
 };
