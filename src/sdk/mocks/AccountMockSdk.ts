@@ -277,7 +277,7 @@ export class AccountMockSdk implements IAccountSDK {
   async createCredentials(
     credentials: IUserCredentials,
     userInContext: ContextUserInfo<any>
-  ): Promise<IResult> {
+  ): Promise<IResultData<{ id: string }>> {
     const user = this.users.get(credentials.login);
     if (user) {
       user.context = userInContext;

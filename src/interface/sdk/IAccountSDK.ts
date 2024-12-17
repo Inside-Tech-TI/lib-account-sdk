@@ -23,7 +23,7 @@ export interface IAccountSDK {
     credentials: IUserCredentials,
     userInContext: ContextUserInfo<any>,
     userDetails?: IUserAccountDetails
-  ): Promise<IResult>;
+  ): Promise<IResultData<{ id: string }>>;
 
   updateUserInfoByToken<T>(
     jwtToken: string,

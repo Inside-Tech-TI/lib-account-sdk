@@ -57,8 +57,8 @@ class AccountMockSdk {
         });
     }
     checkUserTaskStatus(jwtToken, taskAlias) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const user = this.getContextByToken(jwtToken);
             if (!user.tasks) {
                 return { success: true, data: undefined };

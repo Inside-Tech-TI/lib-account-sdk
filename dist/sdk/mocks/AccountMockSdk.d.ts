@@ -41,6 +41,8 @@ export declare class AccountMockSdk implements IAccountSDK {
         token: string;
         expiresIn: number;
     }>>;
-    createCredentials(credentials: IUserCredentials, userInContext: ContextUserInfo<any>): Promise<IResult>;
+    createCredentials(credentials: IUserCredentials, userInContext: ContextUserInfo<any>): Promise<IResultData<{
+        id: string;
+    }>>;
     signOut(token: string): Promise<IResult>;
 }

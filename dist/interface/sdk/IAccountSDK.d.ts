@@ -6,7 +6,9 @@ export interface IAccountSDK {
         expiresIn: number;
         userInfo: ContextUserInfo<T>;
     }>>;
-    createCredentials(credentials: IUserCredentials, userInContext: ContextUserInfo<any>, userDetails?: IUserAccountDetails): Promise<IResult>;
+    createCredentials(credentials: IUserCredentials, userInContext: ContextUserInfo<any>, userDetails?: IUserAccountDetails): Promise<IResultData<{
+        id: string;
+    }>>;
     updateUserInfoByToken<T>(jwtToken: string, userAccountInfo: T): Promise<IResult>;
     updateUserInfoByAccountId(accountId: string, userDetails: IUserAccountDetails): Promise<IResult>;
     rememberPassword(login: string): Promise<IResultData<{
