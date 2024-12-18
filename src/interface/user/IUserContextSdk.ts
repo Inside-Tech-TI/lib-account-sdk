@@ -13,6 +13,7 @@ export interface IUserContextSdk {
 
   updateUserTasks(accountId: string, tasks: UserInteractions): Promise<IResult>;
   removeUserTask(accountId: string, taskAlias: string): Promise<IResult>;
+  listUserTasks(accountId: string): Promise<IResultData<UserInteractions>>;
 
   removeProfilePermission(
     accountId: string,

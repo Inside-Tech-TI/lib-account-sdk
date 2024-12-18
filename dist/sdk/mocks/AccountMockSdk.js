@@ -29,26 +29,31 @@ class AccountMockSdk {
         this.loggedUsers = new Map();
         this.appMock = new AppMockSdk_1.AppMockSdk(app, context);
     }
+    getUserTasks(accountId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return { success: true, data: this.getContextByToken(accountId).tasks };
+        });
+    }
     getContextByToken(token) {
         if (this.loggedUsers.has(token)) {
             return this.loggedUsers.get(token);
         }
         throw new errors_1.HttpError(403, "invalid token");
     }
-    getContextUserInfo(jwtToken) {
+    getContextUserInfo(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return { success: true, data: this.getContextByToken(jwtToken).info };
+            return { success: true, data: this.getContextByToken(accountId).info };
         });
     }
-    listUserTasks(jwtToken) {
+    listUserTasks(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             return { success: true, data: user.tasks };
         });
     }
-    addUserTask(jwtToken, task) {
+    addUserTask(accountId, task) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             if (!user.tasks) {
                 user.tasks = {};
             }
@@ -56,10 +61,10 @@ class AccountMockSdk {
             return { success: true };
         });
     }
-    checkUserTaskStatus(jwtToken, taskAlias) {
+    checkUserTaskStatus(accountId, taskAlias) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             if (!user.tasks) {
                 return { success: true, data: undefined };
             }
@@ -69,16 +74,16 @@ class AccountMockSdk {
             };
         });
     }
-    updateUserTasks(jwtToken, tasks) {
+    updateUserTasks(accountId, tasks) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             user.tasks = tasks;
             return { success: true };
         });
     }
-    removeUserTask(jwtToken, taskAlias) {
+    removeUserTask(accountId, taskAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             if (!user.tasks) {
                 return { success: true };
             }
@@ -86,15 +91,15 @@ class AccountMockSdk {
             return { success: true };
         });
     }
-    listProfiles(jwtToken) {
+    listProfiles(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             return { success: true, data: user.profiles || [] };
         });
     }
-    removeProfilePermission(jwtToken, profileAlias) {
+    removeProfilePermission(accountId, profileAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             if (!user.profiles) {
                 return { success: true };
             }
@@ -106,9 +111,9 @@ class AccountMockSdk {
             return { success: true };
         });
     }
-    updateProfilePermission(jwtToken, profiles) {
+    updateProfilePermission(accountId, profiles) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             const existedProfiles = yield this.appMock.listProfiles(this.context);
             if (!Array.isArray(existedProfiles)) {
                 return {
@@ -130,15 +135,15 @@ class AccountMockSdk {
             return { success: true };
         });
     }
-    listAchievements(jwtToken) {
+    listAchievements(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             return { success: true, data: user.achievements };
         });
     }
-    addAchievement(jwtToken, achievement) {
+    addAchievement(accountId, achievement) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             if (!user.achievements) {
                 user.achievements = {};
             }
@@ -146,9 +151,9 @@ class AccountMockSdk {
             return { success: true };
         });
     }
-    updateAchievement(jwtToken, achievementAlias, achievement) {
+    updateAchievement(accountId, achievementAlias, achievement) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             if (!user.achievements) {
                 return { success: true };
             }
@@ -156,9 +161,9 @@ class AccountMockSdk {
             return { success: true };
         });
     }
-    removeAchievement(jwtToken, achievementAlias) {
+    removeAchievement(accountId, achievementAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             if (!user.achievements) {
                 return { success: true };
             }
@@ -166,16 +171,16 @@ class AccountMockSdk {
             return { success: true };
         });
     }
-    toggleActive(jwtToken, active) {
+    toggleActive(accountId, active) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             user.active = active;
             return { success: true };
         });
     }
-    updateUserInfoByToken(jwtToken, userAccountInfo) {
+    updateUserInfoByToken(accountId, userAccountInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = this.getContextByToken(jwtToken);
+            const user = this.getContextByToken(accountId);
             user.info = userAccountInfo;
             return { success: true };
         });

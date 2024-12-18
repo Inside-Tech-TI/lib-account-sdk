@@ -1,5 +1,38 @@
 import { ContextUserInfo, InteractionItem, IUserAccountDetails, IUserCredentials, UserInteractions } from "./IUser";
 import { IResult, IResultData } from "./types";
+import { z } from "zod";
+export declare const UserInteractionItem: z.ZodObject<{
+    alias: z.ZodString;
+    name: z.ZodString;
+    url: z.ZodOptional<z.ZodString>;
+    info: z.ZodOptional<z.ZodAny>;
+}, "strip", z.ZodTypeAny, {
+    alias: string;
+    name: string;
+    url?: string | undefined;
+    info?: any;
+}, {
+    alias: string;
+    name: string;
+    url?: string | undefined;
+    info?: any;
+}>;
+export declare const UserInteractionsObject: z.ZodRecord<z.ZodString, z.ZodObject<{
+    alias: z.ZodString;
+    name: z.ZodString;
+    url: z.ZodOptional<z.ZodString>;
+    info: z.ZodOptional<z.ZodAny>;
+}, "strip", z.ZodTypeAny, {
+    alias: string;
+    name: string;
+    url?: string | undefined;
+    info?: any;
+}, {
+    alias: string;
+    name: string;
+    url?: string | undefined;
+    info?: any;
+}>>;
 export interface IAccountSDK {
     signIn<T>(login: string, password: string): Promise<IResultData<{
         token: string;
@@ -26,7 +59,7 @@ export interface IAccountSDK {
         expiresIn: number;
     }>>;
     getContextUserInfo<T>(jwtToken: string): Promise<IResultData<ContextUserInfo<T>>>;
-    listUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>>;
+    getUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>>;
     addUserTask(jwtToken: string, task: InteractionItem): Promise<IResult>;
     checkUserTaskStatus(jwtToken: string, taskAlias: string): Promise<IResultData<string | undefined>>;
     updateUserTasks(jwtToken: string, tasks: UserInteractions): Promise<IResult>;
@@ -38,5 +71,5 @@ export interface IAccountSDK {
     addAchievement(jwtToken: string, achievement: InteractionItem): Promise<IResult>;
     updateAchievement(jwtToken: string, achievementAlias: string, achievement: InteractionItem): Promise<IResult>;
     removeAchievement(jwtToken: string, achievementAlias: string): Promise<IResult>;
-    toggleActive(jwtToken: string, active: boolean): Promise<IResult>;
+    toggleActive(accountId: string, active: boolean): Promise<IResult>;
 }

@@ -28,7 +28,7 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield this.getAxiosUser(jwtToken).get(`/api/${this.app}/context/${this.context}/user/data/info`);
         });
     }
-    listUserTasks(jwtToken) {
+    getUserTasks(jwtToken) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.getAxiosUser(jwtToken).get(`/api/${this.app}/context/${this.context}/user/data/tasks`);
         });
@@ -88,9 +88,9 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield this.getAxiosUser(jwtToken).delete(`/api/${this.app}/context/${this.context}/user/data/achievements/remove/${achievementAlias}`);
         });
     }
-    toggleActive(jwtToken, active) {
+    toggleActive(accountId, active) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).post(`/api/${this.app}/context/${this.context}/user/data/active`, { active });
+            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user/${accountId}/toggle-active`, { active });
         });
     }
     rememberPassword(login) {

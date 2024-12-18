@@ -12,92 +12,111 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserContextSdk = exports.userContextPaths = void 0;
 const BaseSdk_1 = require("./BaseSdk");
 exports.userContextPaths = {
-    contextInfo: "/user/context/info/get",
-    updateContextInfo: "/user/context/info/update",
-    updateUserTasks: "/user/tasks/update",
-    removeUserTask: "/user/tasks/remove",
-    removeProfilePermission: "/user/profiles/remove",
-    updateProfilePermission: "/user/profiles/update",
-    listAchievements: "/user/achievements/list",
-    addAchievement: "/user/achievements/add",
-    updateAchievement: "/user/achievements/update",
-    removeAchievement: "/user/achievements/remove",
-    toggleActive: "/user/active",
+    contextInfo: "/user/:accountId/data/info/get",
+    updateContextInfo: "/user/:accountId/data/info/update",
+    addUserTasks: "/user/:accountId/tasks/add",
+    updateUserTasks: "/user/:accountId/tasks/update",
+    removeUserTask: "/user/:accountId/tasks/remove",
+    listProfiles: "/user/:accountId/data/profiles/list",
+    removeProfilePermission: "/user/:accountId/data/profiles/remove",
+    updateProfilePermission: "/user/:accountId/data/profiles/update",
+    listAchievements: "/user/:accountId/data/achievements/list",
+    addAchievement: "/user/:accountId/data/achievements/add",
+    updateAchievement: "/user/:accountId/data/achievements/update",
+    removeAchievement: "/user/:accountId/data/achievements/remove",
+    toggleActive: "/user/:accountId/toggle-active",
 };
 class UserContextSdk extends BaseSdk_1.BaseSdk {
-    getContextUserInfo(token) {
+    getContextUserInfo(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.axiosInstance.get(this.endpoint + exports.userContextPaths.contextInfo, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${accountId}`,
                 },
             });
             return result.data;
         });
     }
-    updateUserInfo(token, userAccountInfo) {
+    listUserTasks(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).post(this.endpoint + exports.userContextPaths.updateContextInfo, userAccountInfo);
+            const result = yield this.axiosInstance.get(this.endpoint +
+                exports.userContextPaths.listProfiles.replace(":accountId", accountId));
             return result.data;
         });
     }
-    updateUserTasks(token, tasks) {
+    updateUserInfo(accountId, userAccountInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).post(this.endpoint + exports.userContextPaths.updateUserTasks, tasks);
+            const result = yield this.axiosInstance.post(this.endpoint +
+                exports.userContextPaths.updateContextInfo.replace(":accountId", accountId), userAccountInfo);
             return result.data;
         });
     }
-    removeUserTask(token, taskAlias) {
+    updateUserTasks(accountId, tasks) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).delete(this.endpoint + exports.userContextPaths.removeUserTask, {
+            const result = yield this.axiosInstance.post(this.endpoint +
+                exports.userContextPaths.updateUserTasks.replace(":accountId", accountId), tasks);
+            return result.data;
+        });
+    }
+    removeUserTask(accountId, taskAlias) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield this.axiosInstance.delete(this.endpoint +
+                exports.userContextPaths.removeUserTask.replace(":accountId", accountId), {
                 data: { taskAlias },
             });
             return result.data;
         });
     }
-    removeProfilePermission(token, profileAlias) {
+    removeProfilePermission(accountId, profileAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).delete(this.endpoint + exports.userContextPaths.removeProfilePermission, {
+            const result = yield this.axiosInstance.delete(this.endpoint +
+                exports.userContextPaths.removeProfilePermission.replace(":accountId", accountId), {
                 data: { profileAlias },
             });
             return result.data;
         });
     }
-    updateProfilePermission(token, profiles) {
+    updateProfilePermission(accountId, profiles) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).post(this.endpoint + exports.userContextPaths.updateProfilePermission, profiles);
+            const result = yield this.axiosInstance.post(this.endpoint +
+                exports.userContextPaths.updateProfilePermission.replace(":accountId", accountId), profiles);
             return result.data;
         });
     }
-    listAchievements(token) {
+    listAchievements(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).get(this.endpoint + exports.userContextPaths.listAchievements);
+            const result = yield this.axiosInstance.get(this.endpoint +
+                exports.userContextPaths.listAchievements.replace(":accountId", accountId));
             return result.data;
         });
     }
-    addAchievement(token, achievement) {
+    addAchievement(accountId, achievement) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).post(this.endpoint + exports.userContextPaths.addAchievement, achievement);
+            const result = yield this.axiosInstance.post(this.endpoint +
+                exports.userContextPaths.addAchievement.replace(":accountId", accountId), achievement);
             return result.data;
         });
     }
-    updateAchievement(token, achievement) {
+    updateAchievement(accountId, achievement) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).post(this.endpoint + exports.userContextPaths.updateAchievement, achievement);
+            const result = yield this.axiosInstance.post(this.endpoint +
+                exports.userContextPaths.updateAchievement.replace(":accountId", accountId), achievement);
             return result.data;
         });
     }
-    removeAchievement(token, achievementAlias) {
+    removeAchievement(accountId, achievementAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).delete(this.endpoint + exports.userContextPaths.removeAchievement, {
+            const result = yield this.axiosInstance.delete(this.endpoint +
+                exports.userContextPaths.removeAchievement.replace(":accountId", accountId), {
                 data: { alias: achievementAlias },
             });
             return result.data;
         });
     }
-    toggleActive(token, active) {
+    toggleActive(accountId, active) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.getAxiosUser(token).put(this.endpoint + exports.userContextPaths.toggleActive, { active });
+            const result = yield this.axiosInstance.put(this.endpoint +
+                exports.userContextPaths.toggleActive.replace(":accountId", accountId), { active });
             return result.data;
         });
     }

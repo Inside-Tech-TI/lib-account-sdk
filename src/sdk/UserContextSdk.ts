@@ -8,8 +8,9 @@ import { IUserContextSdk } from "../interface/user/IUserContextSdk";
 import { BaseSdk } from "./BaseSdk";
 
 export const userContextPaths = {
-  contextInfo: "/user/:accountId/data/info",
-  updateContextInfo: "/user/:accountId/context/info/update",
+  contextInfo: "/user/:accountId/data/info/get",
+  updateContextInfo: "/user/:accountId/data/info/update",
+  addUserTasks: "/user/:accountId/tasks/add",
   updateUserTasks: "/user/:accountId/tasks/update",
   removeUserTask: "/user/:accountId/tasks/remove",
   listProfiles: "/user/:accountId/data/profiles/list",
@@ -36,12 +37,22 @@ export class UserContextSdk extends BaseSdk implements IUserContextSdk {
     );
     return result.data;
   }
+  async listUserTasks(
+    accountId: string
+  ): Promise<IResultData<UserInteractions>> {
+    const result = await this.axiosInstance.get(
+      this.endpoint +
+        userContextPaths.listProfiles.replace(":accountId", accountId)
+    );
+    return result.data;
+  }
   async updateUserInfo<T>(
     accountId: string,
     userAccountInfo: T
   ): Promise<IResult> {
     const result = await this.axiosInstance.post(
-      this.endpoint + userContextPaths.updateContextInfo,
+      this.endpoint +
+        userContextPaths.updateContextInfo.replace(":accountId", accountId),
       userAccountInfo
     );
     return result.data;

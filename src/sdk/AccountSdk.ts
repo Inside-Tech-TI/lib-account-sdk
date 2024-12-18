@@ -38,9 +38,7 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
       `/api/${this.app}/context/${this.context}/user/data/info`
     );
   }
-  async listUserTasks(
-    jwtToken: string
-  ): Promise<IResultData<UserInteractions>> {
+  async getUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>> {
     return await this.getAxiosUser(jwtToken).get(
       `/api/${this.app}/context/${this.context}/user/data/tasks`
     );

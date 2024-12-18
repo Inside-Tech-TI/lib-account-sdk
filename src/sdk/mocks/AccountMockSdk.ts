@@ -31,6 +31,11 @@ export class AccountMockSdk implements IAccountSDK {
   constructor(protected app: string, protected context: string) {
     this.appMock = new AppMockSdk(app, context);
   }
+  async getUserTasks(
+    accountId: string
+  ): Promise<IResultData<UserInteractions>> {
+    return { success: true, data: this.getContextByToken(accountId).tasks };
+  }
 
   private getContextByToken<T>(token: string): ContextUserInfo<T> {
     if (this.loggedUsers.has(token)) {
@@ -38,17 +43,20 @@ export class AccountMockSdk implements IAccountSDK {
     }
     throw new HttpError(403, "invalid token");
   }
-  async getContextUserInfo<T>(jwtToken: string): Promise<IResultData<T>> {
-    return { success: true, data: this.getContextByToken(jwtToken).info as T };
+  async getContextUserInfo<T>(accountId: string): Promise<IResultData<T>> {
+    return { success: true, data: this.getContextByToken(accountId).info as T };
   }
   async listUserTasks(
-    jwtToken: string
+    accountId: string
   ): Promise<IResultData<UserInteractions>> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     return { success: true, data: user.tasks };
   }
-  async addUserTask(jwtToken: string, task: InteractionItem): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+  async addUserTask(
+    accountId: string,
+    task: InteractionItem
+  ): Promise<IResult> {
+    const user = this.getContextByToken(accountId);
     if (!user.tasks) {
       user.tasks = {};
     }
@@ -56,10 +64,10 @@ export class AccountMockSdk implements IAccountSDK {
     return { success: true };
   }
   async checkUserTaskStatus(
-    jwtToken: string,
+    accountId: string,
     taskAlias: string
   ): Promise<IResultData<string | undefined>> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     if (!user.tasks) {
       return { success: true, data: undefined };
     }
@@ -69,31 +77,31 @@ export class AccountMockSdk implements IAccountSDK {
     };
   }
   async updateUserTasks(
-    jwtToken: string,
+    accountId: string,
     tasks: UserInteractions
   ): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
 
     user.tasks = tasks;
     return { success: true };
   }
-  async removeUserTask(jwtToken: string, taskAlias: string): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+  async removeUserTask(accountId: string, taskAlias: string): Promise<IResult> {
+    const user = this.getContextByToken(accountId);
     if (!user.tasks) {
       return { success: true };
     }
     delete user.tasks[taskAlias];
     return { success: true };
   }
-  async listProfiles(jwtToken: string): Promise<IResultData<string[]>> {
-    const user = this.getContextByToken(jwtToken);
+  async listProfiles(accountId: string): Promise<IResultData<string[]>> {
+    const user = this.getContextByToken(accountId);
     return { success: true, data: user.profiles || [] };
   }
   async removeProfilePermission(
-    jwtToken: string,
+    accountId: string,
     profileAlias: string
   ): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     if (!user.profiles) {
       return { success: true };
     }
@@ -105,10 +113,10 @@ export class AccountMockSdk implements IAccountSDK {
     return { success: true };
   }
   async updateProfilePermission(
-    jwtToken: string,
+    accountId: string,
     profiles: string[]
   ): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     const existedProfiles = await this.appMock.listProfiles(this.context);
     if (!Array.isArray(existedProfiles)) {
       return {
@@ -130,16 +138,16 @@ export class AccountMockSdk implements IAccountSDK {
     return { success: true };
   }
   async listAchievements(
-    jwtToken: string
+    accountId: string
   ): Promise<IResultData<UserInteractions>> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     return { success: true, data: user.achievements };
   }
   async addAchievement(
-    jwtToken: string,
+    accountId: string,
     achievement: InteractionItem
   ): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     if (!user.achievements) {
       user.achievements = {};
     }
@@ -147,11 +155,11 @@ export class AccountMockSdk implements IAccountSDK {
     return { success: true };
   }
   async updateAchievement(
-    jwtToken: string,
+    accountId: string,
     achievementAlias: string,
     achievement: InteractionItem
   ): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     if (!user.achievements) {
       return { success: true };
     }
@@ -159,26 +167,26 @@ export class AccountMockSdk implements IAccountSDK {
     return { success: true };
   }
   async removeAchievement(
-    jwtToken: string,
+    accountId: string,
     achievementAlias: string
   ): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     if (!user.achievements) {
       return { success: true };
     }
     delete user.achievements[achievementAlias];
     return { success: true };
   }
-  async toggleActive(jwtToken: string, active: boolean): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+  async toggleActive(accountId: string, active: boolean): Promise<IResult> {
+    const user = this.getContextByToken(accountId);
     user.active = active;
     return { success: true };
   }
   async updateUserInfoByToken<T>(
-    jwtToken: string,
+    accountId: string,
     userAccountInfo: T
   ): Promise<IResult> {
-    const user = this.getContextByToken(jwtToken);
+    const user = this.getContextByToken(accountId);
     user.info = userAccountInfo;
     return { success: true };
   }

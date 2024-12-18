@@ -9,7 +9,7 @@ export declare class AccountSdk extends BaseSdk implements IAccountSDK {
     updateUserInfoByToken<T>(jwtToken: string, userAccountInfo: T): Promise<IResult>;
     updateUserInfoByAccountId(accountId: string, userDetails: IUserAccountDetails): Promise<IResult>;
     getContextUserInfo<T>(jwtToken: string): Promise<IResultData<ContextUserInfo<T>>>;
-    listUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>>;
+    getUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>>;
     addUserTask(jwtToken: string, task: InteractionItem): Promise<IResult>;
     checkUserTaskStatus(jwtToken: string, taskAlias: string): Promise<IResultData<string | undefined>>;
     updateUserTasks(jwtToken: string, tasks: UserInteractions): Promise<IResult>;
@@ -21,7 +21,7 @@ export declare class AccountSdk extends BaseSdk implements IAccountSDK {
     addAchievement(jwtToken: string, achievement: InteractionItem): Promise<IResult>;
     updateAchievement(jwtToken: string, achievementAlias: string, achievement: InteractionItem): Promise<IResult>;
     removeAchievement(jwtToken: string, achievementAlias: string): Promise<IResult>;
-    toggleActive(jwtToken: string, active: boolean): Promise<IResult>;
+    toggleActive(accountId: string, active: boolean): Promise<IResult>;
     rememberPassword(login: string): Promise<IResultData<{
         tokenToRenew: string;
     }>>;

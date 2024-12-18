@@ -7,6 +7,16 @@ import {
 } from "./IUser";
 import { IResult, IResultData } from "./types";
 
+import { z } from "zod";
+
+export const UserInteractionItem = z.object({
+  alias: z.string(),
+  name: z.string(),
+  url: z.string().optional(),
+  info: z.any().optional(),
+});
+
+export const UserInteractionsObject = z.record(UserInteractionItem);
 export interface IAccountSDK {
   signIn<T>(
     login: string,
@@ -63,7 +73,7 @@ export interface IAccountSDK {
     jwtToken: string
   ): Promise<IResultData<ContextUserInfo<T>>>;
 
-  listUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>>;
+  getUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>>;
   addUserTask(jwtToken: string, task: InteractionItem): Promise<IResult>;
   checkUserTaskStatus(
     jwtToken: string,
