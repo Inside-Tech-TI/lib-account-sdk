@@ -129,9 +129,9 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
       `/api/${this.app}/context/${this.context}/user/data/achievements/remove/${achievementAlias}`
     );
   }
-  async toggleActive(jwtToken: string, active: boolean): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).post(
-      `/api/${this.app}/context/${this.context}/user/data/active`,
+  async toggleActive(accountId: string, active: boolean): Promise<IResult> {
+    return await this.axiosInstance.post(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/toggle-active`,
       { active }
     );
   }

@@ -97,5 +97,5 @@ export interface IAccountSDK {
     jwtToken: string,
     achievementAlias: string
   ): Promise<IResult>;
-  toggleActive(jwtToken: string, active: boolean): Promise<IResult>;
+  toggleActive(accountId: string, active: boolean): Promise<IResult>;
 }

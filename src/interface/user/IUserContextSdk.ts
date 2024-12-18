@@ -7,25 +7,34 @@ import {
 
 export interface IUserContextSdk {
   getContextUserInfo<T>(
-    token: string
+    accountId: string
   ): Promise<IResultData<ContextUserInfo<T>>>;
-  updateUserInfo<T>(token: string, userAccountInfo: T): Promise<IResult>;
+  updateUserInfo<T>(accountId: string, userAccountInfo: T): Promise<IResult>;
 
-  updateUserTasks(token: string, tasks: UserInteractions): Promise<IResult>;
-  removeUserTask(token: string, taskAlias: string): Promise<IResult>;
+  updateUserTasks(accountId: string, tasks: UserInteractions): Promise<IResult>;
+  removeUserTask(accountId: string, taskAlias: string): Promise<IResult>;
 
   removeProfilePermission(
-    token: string,
+    accountId: string,
     profileAlias: string
   ): Promise<IResult>;
-  updateProfilePermission(token: string, profiles: string[]): Promise<IResult>;
+  updateProfilePermission(
+    accountId: string,
+    profiles: string[]
+  ): Promise<IResult>;
 
-  listAchievements(token: string): Promise<IResultData<UserInteractions>>;
-  addAchievement(token: string, achievement: InteractionItem): Promise<IResult>;
-  updateAchievement(
-    token: string,
+  listAchievements(accountId: string): Promise<IResultData<UserInteractions>>;
+  addAchievement(
+    accountId: string,
     achievement: InteractionItem
   ): Promise<IResult>;
-  removeAchievement(token: string, achievementAlias: string): Promise<IResult>;
-  toggleActive(token: string, active: boolean): Promise<IResult>;
+  updateAchievement(
+    accountId: string,
+    achievement: InteractionItem
+  ): Promise<IResult>;
+  removeAchievement(
+    accountId: string,
+    achievementAlias: string
+  ): Promise<IResult>;
+  toggleActive(accountId: string, active: boolean): Promise<IResult>;
 }
