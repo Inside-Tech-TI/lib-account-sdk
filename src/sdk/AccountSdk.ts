@@ -128,7 +128,7 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
     );
   }
   async toggleActive(accountId: string, active: boolean): Promise<IResult> {
-    return await this.axiosInstance.post(
+    return await this.apiPost<IResult>(
       `/api/${this.app}/context/${this.context}/user/${accountId}/toggle-active`,
       { active }
     );
@@ -137,14 +137,17 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   async rememberPassword(
     login: string
   ): Promise<IResultData<{ tokenToRenew: string }>> {
-    return await this.axiosInstance.post(`/public/forgot-password`, { login });
+    return await this.apiPost<IResultData<{ tokenToRenew: string }>>(
+      `/public/forgot-password`,
+      { login }
+    );
   }
   async resetPasswordFromToken(
     login: string,
     tokenToRenew: string,
     newPassword: string
   ): Promise<IResult> {
-    return this.axiosInstance.post(`/public/reset-password`, {
+    return await this.apiPost<IResult>(`/public/reset-password`, {
       login,
       tokenToRenew,
       newPassword,
@@ -160,7 +163,13 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
       userInfo: ContextUserInfo<T>;
     }>
   > {
-    return await this.axiosInstance.post("/public/signin/password", {
+    return await this.apiPost<
+      IResultData<{
+        token: string;
+        expiresIn: number;
+        userInfo: ContextUserInfo<T>;
+      }>
+    >("/public/signin/password", {
       password,
       login,
       app: this.app,
@@ -187,9 +196,16 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
     userInContext: ContextUserInfo<any>,
     userDetails: any = {}
   ): Promise<IResultData<{ id: string }>> {
-    return await this.axiosInstance.post(
+    return await this.apiPost<IResultData<{ id: string }>>(
       `/api/${this.app}/context/${this.context}/user-credentials/create`,
       { credentials, userDetails, userInContext }
     );
+  }
+  private async apiPost<T>(endpoint: string, data: any): Promise<T> {
+    const response = await this.axiosInstance.post(endpoint, data);
+    if (response.status === 200) {
+      return response.data as T;
+    }
+    return response.data as T;
   }
 }

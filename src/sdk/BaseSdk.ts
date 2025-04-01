@@ -21,7 +21,6 @@ export const getAxiosInstance = (
   const key: string = `${baseURL}.${apiToken}.${userToken}`;
   if (!axiosInstanceMap.has(key)) {
     const headers: any = {
-      "Api-Authorization": `Bearer ${apiToken}`,
       "x-api-key": `${apiToken}`,
     };
     if (userToken) {

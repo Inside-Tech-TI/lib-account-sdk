@@ -90,17 +90,17 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
     }
     toggleActive(accountId, active) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user/${accountId}/toggle-active`, { active });
+            return yield this.apiPost(`/api/${this.app}/context/${this.context}/user/${accountId}/toggle-active`, { active });
         });
     }
     rememberPassword(login) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.axiosInstance.post(`/public/forgot-password`, { login });
+            return yield this.apiPost(`/public/forgot-password`, { login });
         });
     }
     resetPasswordFromToken(login, tokenToRenew, newPassword) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.axiosInstance.post(`/public/reset-password`, {
+            return yield this.apiPost(`/public/reset-password`, {
                 login,
                 tokenToRenew,
                 newPassword,
@@ -109,7 +109,7 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
     }
     signIn(login, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.axiosInstance.post("/public/signin/password", {
+            return yield this.apiPost("/public/signin/password", {
                 password,
                 login,
                 app: this.app,
@@ -137,7 +137,16 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
     }
     createCredentials(credentials_1, userInContext_1) {
         return __awaiter(this, arguments, void 0, function* (credentials, userInContext, userDetails = {}) {
-            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user-credentials/create`, { credentials, userDetails, userInContext });
+            return yield this.apiPost(`/api/${this.app}/context/${this.context}/user-credentials/create`, { credentials, userDetails, userInContext });
+        });
+    }
+    apiPost(endpoint, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.axiosInstance.post(endpoint, data);
+            if (response.status === 200) {
+                return response.data;
+            }
+            return response.data;
         });
     }
 }

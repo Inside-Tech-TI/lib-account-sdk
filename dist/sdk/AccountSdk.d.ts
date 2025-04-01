@@ -40,4 +40,5 @@ export declare class AccountSdk extends BaseSdk implements IAccountSDK {
     createCredentials(credentials: IUserCredentials, userInContext: ContextUserInfo<any>, userDetails?: any): Promise<IResultData<{
         id: string;
     }>>;
+    private apiPost;
 }
