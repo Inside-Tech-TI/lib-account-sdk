@@ -184,11 +184,12 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   }
   async createCredentials(
     credentials: IUserCredentials,
-    userInContext: ContextUserInfo<any>
+    userInContext: ContextUserInfo<any>,
+    userDetails: any = {}
   ): Promise<IResultData<{ id: string }>> {
     return await this.axiosInstance.post(
       `/api/${this.app}/context/${this.context}/user-credentials/create`,
-      { credentials, userInContext }
+      { credentials, userDetails, userInContext }
     );
   }
 }

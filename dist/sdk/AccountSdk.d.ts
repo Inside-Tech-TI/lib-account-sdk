@@ -37,7 +37,7 @@ export declare class AccountSdk extends BaseSdk implements IAccountSDK {
         token: string;
         expiresIn: number;
     }>>;
-    createCredentials(credentials: IUserCredentials, userInContext: ContextUserInfo<any>): Promise<IResultData<{
+    createCredentials(credentials: IUserCredentials, userInContext: ContextUserInfo<any>, userDetails?: any): Promise<IResultData<{
         id: string;
     }>>;
 }

@@ -135,9 +135,9 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield axiosUser.post(`/auth/refresh-token`);
         });
     }
-    createCredentials(credentials, userInContext) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user-credentials/create`, { credentials, userInContext });
+    createCredentials(credentials_1, userInContext_1) {
+        return __awaiter(this, arguments, void 0, function* (credentials, userInContext, userDetails = {}) {
+            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user-credentials/create`, { credentials, userDetails, userInContext });
         });
     }
 }
