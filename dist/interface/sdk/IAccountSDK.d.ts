@@ -53,6 +53,7 @@ export interface IAccountSDK {
         jwtToken: string;
         expiresIn: number;
         userInfo: ContextUserInfo<T>;
+        accountId: string;
     }>>;
     refreshToken(jwtToken: string): Promise<IResultData<{
         token: string;
