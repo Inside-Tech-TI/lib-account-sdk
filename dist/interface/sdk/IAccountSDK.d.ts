@@ -44,7 +44,7 @@ export interface IAccountSDK {
     }>>;
     updateUserInfoByToken<T>(jwtToken: string, userAccountInfo: T): Promise<IResult>;
     updateUserInfoByAccountId(accountId: string, userDetails: IUserAccountDetails): Promise<IResult>;
-    rememberPassword(login: string): Promise<IResultData<{
+    rememberPassword(login: string, timeoutInSeconds?: number): Promise<IResultData<{
         tokenToRenew: string;
     }>>;
     resetPasswordFromToken(login: string, jwtTokenToRenew: string, newPassword: string): Promise<IResult>;

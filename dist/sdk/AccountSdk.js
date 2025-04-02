@@ -95,9 +95,9 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield this.apiPost(`/api/${this.app}/context/${this.context}/user/${accountId}/toggle-active`, { active });
         });
     }
-    rememberPassword(login) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.apiPost(`/public/forgot-password`, { login });
+    rememberPassword(login_1) {
+        return __awaiter(this, arguments, void 0, function* (login, timeoutInSeconds = 180) {
+            return yield this.apiPost(`/public/forgot-password`, { login, timeoutInSeconds });
         });
     }
     resetPasswordFromToken(login, tokenToRenew, newPassword) {

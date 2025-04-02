@@ -46,7 +46,8 @@ export interface IAccountSDK {
   ): Promise<IResult>;
 
   rememberPassword(
-    login: string
+    login: string,
+    timeoutInSeconds?: number
   ): Promise<IResultData<{ tokenToRenew: string }>>;
 
   resetPasswordFromToken(

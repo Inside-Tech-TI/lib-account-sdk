@@ -22,7 +22,7 @@ export declare class AccountSdk extends BaseSdk implements IAccountSDK {
     updateAchievement(accountId: string, achievementAlias: string, achievement: InteractionItem): Promise<IResult>;
     removeAchievement(accountId: string, achievementAlias: string): Promise<IResult>;
     toggleActive(accountId: string, active: boolean): Promise<IResult>;
-    rememberPassword(login: string): Promise<IResultData<{
+    rememberPassword(login: string, timeoutInSeconds?: number): Promise<IResultData<{
         tokenToRenew: string;
     }>>;
     resetPasswordFromToken(login: string, tokenToRenew: string, newPassword: string): Promise<IResult>;

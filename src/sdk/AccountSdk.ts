@@ -169,11 +169,12 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   }
 
   async rememberPassword(
-    login: string
+    login: string,
+    timeoutInSeconds: number = 180
   ): Promise<IResultData<{ tokenToRenew: string }>> {
     return await this.apiPost<IResultData<{ tokenToRenew: string }>>(
       `/public/forgot-password`,
-      { login }
+      { login, timeoutInSeconds }
     );
   }
   async resetPasswordFromToken(
