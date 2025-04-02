@@ -25,46 +25,56 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     throw new Error("Method not implemented.");
   }
-  updateUserInfoByAccountId(
+  async updateUserInfoByAccountId(
     accountId: string,
     userDetails: IUserAccountDetails
   ): Promise<IResult> {
-    throw new Error("Method not implemented.");
+    return await this.axiosInstance.post(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/info/update`,
+      userDetails
+    );
   }
   async getContextUserInfo<T>(
-    jwtToken: string
+    accountId: string
   ): Promise<IResultData<ContextUserInfo<T>>> {
-    return await this.getAxiosUser(jwtToken).get(
-      `/api/${this.app}/context/${this.context}/user/data/info`
+    return await this.axiosInstance.get(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/info`
     );
   }
-  async getUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>> {
-    return await this.getAxiosUser(jwtToken).get(
-      `/api/${this.app}/context/${this.context}/user/data/tasks`
+  async getUserTasks(
+    accountId: string
+  ): Promise<IResultData<UserInteractions>> {
+    return await this.axiosInstance.get(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks`
     );
   }
-  async addUserTask(jwtToken: string, task: InteractionItem): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).post(
-      `/api/${this.app}/context/${this.context}/user/data/tasks/add`,
+  async addUserTask(
+    accountId: string,
+    task: InteractionItem
+  ): Promise<IResult> {
+    return await this.axiosInstance.post(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks/add`,
       task
     );
   }
   async checkUserTaskStatus(
-    jwtToken: string,
+    accountId: string,
     taskAlias: string
   ): Promise<IResultData<string | undefined>> {
-    return await this.getAxiosUser(jwtToken).get(
-      `/api/${this.app}/context/${this.context}/user/data/tasks/status/${taskAlias}`
-    );
+    throw new Error("Method not implemented in account api.");
+    // return await this.axiosInstance.get(
+    //   `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks/status/${taskAlias}`
+    // );
   }
   async updateUserTasks(
-    jwtToken: string,
+    accountId: string,
     tasks: UserInteractions
   ): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).post(
-      `/api/${this.app}/context/${this.context}/user/data/tasks/update`,
-      tasks
-    );
+    throw new Error("Method not implemented in account api.");
+    // return await this.getAxiosUser(jwtToken).post(
+    //   `/api/${this.app}/context/${this.context}/user/data/tasks/update`,
+    //   tasks
+    // );
   }
   async removeUserTask(jwtToken: string, taskAlias: string): Promise<IResult> {
     return await this.getAxiosUser(jwtToken).delete(
@@ -72,19 +82,19 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
     );
   }
   async removeProfilePermission(
-    jwtToken: string,
+    accountId: string,
     profileAlias: string
   ): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).delete(
-      `/api/${this.app}/context/${this.context}/user/data/profiles/remove/${profileAlias}`
+    return await this.axiosInstance.delete(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/remove/${profileAlias}`
     );
   }
   async updateProfilePermission(
-    jwtToken: string,
+    accountId: string,
     profiles: string[]
   ): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).post(
-      `/api/${this.app}/context/${this.context}/user/data/profiles/update`,
+    return await this.axiosInstance.post(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/update`,
       profiles
     );
   }
@@ -94,37 +104,37 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
     );
   }
   async listAchievements(
-    jwtToken: string
+    accountId: string
   ): Promise<IResultData<UserInteractions>> {
-    return await this.getAxiosUser(jwtToken).get(
-      `/api/${this.app}/context/${this.context}/user/data/achievements`
+    return await this.axiosInstance.get(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/list`
     );
   }
   async addAchievement(
-    jwtToken: string,
+    accountId: string,
     achievement: InteractionItem
   ): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).post(
-      `/api/${this.app}/context/${this.context}/user/data/achievements/add`,
+    return await this.axiosInstance.post(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/add`,
       achievement
     );
   }
   async updateAchievement(
-    jwtToken: string,
+    accountId: string,
     achievementAlias: string,
     achievement: InteractionItem
   ): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).put(
-      `/api/${this.app}/context/${this.context}/user/data/achievements/update/${achievementAlias}`,
+    return await this.axiosInstance.put(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/update/${achievementAlias}`,
       achievement
     );
   }
   async removeAchievement(
-    jwtToken: string,
+    accountId: string,
     achievementAlias: string
   ): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).delete(
-      `/api/${this.app}/context/${this.context}/user/data/achievements/remove/${achievementAlias}`
+    return await this.axiosInstance.delete(
+      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/remove/${achievementAlias}`
     );
   }
   async toggleActive(accountId: string, active: boolean): Promise<IResult> {

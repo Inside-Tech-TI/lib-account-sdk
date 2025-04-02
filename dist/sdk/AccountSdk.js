@@ -21,31 +21,33 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
         throw new Error("Method not implemented.");
     }
     updateUserInfoByAccountId(accountId, userDetails) {
-        throw new Error("Method not implemented.");
-    }
-    getContextUserInfo(jwtToken) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).get(`/api/${this.app}/context/${this.context}/user/data/info`);
+            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user/${accountId}/data/info/update`, userDetails);
         });
     }
-    getUserTasks(jwtToken) {
+    getContextUserInfo(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).get(`/api/${this.app}/context/${this.context}/user/data/tasks`);
+            return yield this.axiosInstance.get(`/api/${this.app}/context/${this.context}/user/${accountId}/data/info`);
         });
     }
-    addUserTask(jwtToken, task) {
+    getUserTasks(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).post(`/api/${this.app}/context/${this.context}/user/data/tasks/add`, task);
+            return yield this.axiosInstance.get(`/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks`);
         });
     }
-    checkUserTaskStatus(jwtToken, taskAlias) {
+    addUserTask(accountId, task) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).get(`/api/${this.app}/context/${this.context}/user/data/tasks/status/${taskAlias}`);
+            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks/add`, task);
         });
     }
-    updateUserTasks(jwtToken, tasks) {
+    checkUserTaskStatus(accountId, taskAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).post(`/api/${this.app}/context/${this.context}/user/data/tasks/update`, tasks);
+            throw new Error("Method not implemented in account api.");
+        });
+    }
+    updateUserTasks(accountId, tasks) {
+        return __awaiter(this, void 0, void 0, function* () {
+            throw new Error("Method not implemented in account api.");
         });
     }
     removeUserTask(jwtToken, taskAlias) {
@@ -53,14 +55,14 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield this.getAxiosUser(jwtToken).delete(`/api/${this.app}/context/${this.context}/user/data/task/remove/${taskAlias}`);
         });
     }
-    removeProfilePermission(jwtToken, profileAlias) {
+    removeProfilePermission(accountId, profileAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).delete(`/api/${this.app}/context/${this.context}/user/data/profiles/remove/${profileAlias}`);
+            return yield this.axiosInstance.delete(`/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/remove/${profileAlias}`);
         });
     }
-    updateProfilePermission(jwtToken, profiles) {
+    updateProfilePermission(accountId, profiles) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).post(`/api/${this.app}/context/${this.context}/user/data/profiles/update`, profiles);
+            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/update`, profiles);
         });
     }
     listProfiles(jwtToken) {
@@ -68,24 +70,24 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield this.getAxiosUser(jwtToken).get(`/api/${this.app}/context/${this.context}/user/data/profiles`);
         });
     }
-    listAchievements(jwtToken) {
+    listAchievements(accountId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).get(`/api/${this.app}/context/${this.context}/user/data/achievements`);
+            return yield this.axiosInstance.get(`/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/list`);
         });
     }
-    addAchievement(jwtToken, achievement) {
+    addAchievement(accountId, achievement) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).post(`/api/${this.app}/context/${this.context}/user/data/achievements/add`, achievement);
+            return yield this.axiosInstance.post(`/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/add`, achievement);
         });
     }
-    updateAchievement(jwtToken, achievementAlias, achievement) {
+    updateAchievement(accountId, achievementAlias, achievement) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).put(`/api/${this.app}/context/${this.context}/user/data/achievements/update/${achievementAlias}`, achievement);
+            return yield this.axiosInstance.put(`/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/update/${achievementAlias}`, achievement);
         });
     }
-    removeAchievement(jwtToken, achievementAlias) {
+    removeAchievement(accountId, achievementAlias) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getAxiosUser(jwtToken).delete(`/api/${this.app}/context/${this.context}/user/data/achievements/remove/${achievementAlias}`);
+            return yield this.axiosInstance.delete(`/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/remove/${achievementAlias}`);
         });
     }
     toggleActive(accountId, active) {
@@ -135,8 +137,8 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield axiosUser.post(`/auth/refresh-token`);
         });
     }
-    createCredentials(credentials_1, userInContext_1) {
-        return __awaiter(this, arguments, void 0, function* (credentials, userInContext, userDetails = {}) {
+    createCredentials(credentials, userInContext, userDetails = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
             return yield this.apiPost(`/api/${this.app}/context/${this.context}/user-credentials/create`, { credentials, userDetails, userInContext });
         });
     }
