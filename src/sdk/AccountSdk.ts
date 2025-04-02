@@ -29,33 +29,41 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
     accountId: string,
     userDetails: IUserAccountDetails
   ): Promise<IResult> {
-    return await this.axiosInstance.post(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/info/update`,
-      userDetails
-    );
+    return (
+      await this.axiosInstance.post(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/info/update`,
+        userDetails
+      )
+    ).data;
   }
   async getContextUserInfo<T>(
     accountId: string
   ): Promise<IResultData<ContextUserInfo<T>>> {
-    return await this.axiosInstance.get(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/info`
-    );
+    return (
+      await this.axiosInstance.get(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/info`
+      )
+    ).data;
   }
   async getUserTasks(
     accountId: string
   ): Promise<IResultData<UserInteractions>> {
-    return await this.axiosInstance.get(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks`
-    );
+    return (
+      await this.axiosInstance.get(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks`
+      )
+    ).data;
   }
   async addUserTask(
     accountId: string,
     task: InteractionItem
   ): Promise<IResult> {
-    return await this.axiosInstance.post(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks/add`,
-      task
-    );
+    return (
+      await this.axiosInstance.post(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks/add`,
+        task
+      )
+    ).data;
   }
   async checkUserTaskStatus(
     accountId: string,
@@ -77,65 +85,81 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
     // );
   }
   async removeUserTask(jwtToken: string, taskAlias: string): Promise<IResult> {
-    return await this.getAxiosUser(jwtToken).delete(
-      `/api/${this.app}/context/${this.context}/user/data/task/remove/${taskAlias}`
-    );
+    return (
+      await this.getAxiosUser(jwtToken).delete(
+        `/api/${this.app}/context/${this.context}/user/data/task/remove/${taskAlias}`
+      )
+    ).data;
   }
   async removeProfilePermission(
     accountId: string,
     profileAlias: string
   ): Promise<IResult> {
-    return await this.axiosInstance.delete(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/remove/${profileAlias}`
-    );
+    return (
+      await this.axiosInstance.delete(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/remove/${profileAlias}`
+      )
+    ).data;
   }
   async updateProfilePermission(
     accountId: string,
     profiles: string[]
   ): Promise<IResult> {
-    return await this.axiosInstance.post(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/update`,
-      profiles
-    );
+    return (
+      await this.axiosInstance.post(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/update`,
+        profiles
+      )
+    ).data;
   }
   async listProfiles(jwtToken: string): Promise<IResultData<string[]>> {
-    return await this.getAxiosUser(jwtToken).get(
-      `/api/${this.app}/context/${this.context}/user/data/profiles`
-    );
+    return (
+      await this.getAxiosUser(jwtToken).get(
+        `/api/${this.app}/context/${this.context}/user/data/profiles`
+      )
+    ).data;
   }
   async listAchievements(
     accountId: string
   ): Promise<IResultData<UserInteractions>> {
-    return await this.axiosInstance.get(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/list`
-    );
+    return (
+      await this.axiosInstance.get(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/list`
+      )
+    ).data;
   }
   async addAchievement(
     accountId: string,
     achievement: InteractionItem
   ): Promise<IResult> {
-    return await this.axiosInstance.post(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/add`,
-      achievement
-    );
+    return (
+      await this.axiosInstance.post(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/add`,
+        achievement
+      )
+    ).data;
   }
   async updateAchievement(
     accountId: string,
     achievementAlias: string,
     achievement: InteractionItem
   ): Promise<IResult> {
-    return await this.axiosInstance.put(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/update/${achievementAlias}`,
-      achievement
-    );
+    return (
+      await this.axiosInstance.put(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/update/${achievementAlias}`,
+        achievement
+      )
+    ).data;
   }
   async removeAchievement(
     accountId: string,
     achievementAlias: string
   ): Promise<IResult> {
-    return await this.axiosInstance.delete(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/remove/${achievementAlias}`
-    );
+    return (
+      await this.axiosInstance.delete(
+        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/remove/${achievementAlias}`
+      )
+    ).data;
   }
   async toggleActive(accountId: string, active: boolean): Promise<IResult> {
     return await this.apiPost<IResult>(
@@ -188,18 +212,18 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   }
   async signOut(token: string): Promise<IResult> {
     const axiosUser = this.getAxiosUser(token);
-    return await axiosUser.post("/auth/logout");
+    return (await axiosUser.post("/auth/logout")).data as IResult;
   }
   //done
   async checkToken(token: string): Promise<IResult> {
     const axiosUser = this.getAxiosUser(token);
-    return await axiosUser.post(`/auth/check-token`);
+    return (await axiosUser.post(`/auth/check-token`)).data as IResult;
   }
   async refreshToken(
     token: string
   ): Promise<IResultData<{ token: string; expiresIn: number }>> {
     const axiosUser = this.getAxiosUser(token);
-    return await axiosUser.post(`/auth/refresh-token`);
+    return (await axiosUser.post(`/auth/refresh-token`)).data;
   }
   async createCredentials(
     credentials: IUserCredentials,
@@ -213,9 +237,6 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   }
   private async apiPost<T>(endpoint: string, data: any): Promise<T> {
     const response = await this.axiosInstance.post(endpoint, data);
-    if (response.status === 200) {
-      return response.data as T;
-    }
     return response.data as T;
   }
 }

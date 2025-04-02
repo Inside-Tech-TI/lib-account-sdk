@@ -70,41 +70,41 @@ export interface IAccountSDK {
   ): Promise<IResultData<{ token: string; expiresIn: number }>>;
 
   getContextUserInfo<T>(
-    jwtToken: string
+    accountId: string
   ): Promise<IResultData<ContextUserInfo<T>>>;
 
-  getUserTasks(jwtToken: string): Promise<IResultData<UserInteractions>>;
-  addUserTask(jwtToken: string, task: InteractionItem): Promise<IResult>;
+  getUserTasks(accountId: string): Promise<IResultData<UserInteractions>>;
+  addUserTask(accountId: string, task: InteractionItem): Promise<IResult>;
   checkUserTaskStatus(
-    jwtToken: string,
+    accountId: string,
     taskAlias: string
   ): Promise<IResultData<string | undefined>>;
 
-  updateUserTasks(jwtToken: string, tasks: UserInteractions): Promise<IResult>;
-  removeUserTask(jwtToken: string, taskAlias: string): Promise<IResult>;
+  updateUserTasks(accountId: string, tasks: UserInteractions): Promise<IResult>;
+  removeUserTask(accountId: string, taskAlias: string): Promise<IResult>;
 
   removeProfilePermission(
-    jwtToken: string,
+    accountId: string,
     profileAlias: string
   ): Promise<IResult>;
   updateProfilePermission(
-    jwtToken: string,
+    accountId: string,
     profiles: string[]
   ): Promise<IResult>;
-  listProfiles(jwtToken: string): Promise<IResultData<string[]>>;
+  listProfiles(accountId: string): Promise<IResultData<string[]>>;
 
-  listAchievements(jwtToken: string): Promise<IResultData<UserInteractions>>;
+  listAchievements(accountId: string): Promise<IResultData<UserInteractions>>;
   addAchievement(
-    jwtToken: string,
+    accountId: string,
     achievement: InteractionItem
   ): Promise<IResult>;
   updateAchievement(
-    jwtToken: string,
+    accountId: string,
     achievementAlias: string,
     achievement: InteractionItem
   ): Promise<IResult>;
   removeAchievement(
-    jwtToken: string,
+    accountId: string,
     achievementAlias: string
   ): Promise<IResult>;
   toggleActive(accountId: string, active: boolean): Promise<IResult>;
