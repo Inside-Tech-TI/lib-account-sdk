@@ -5,7 +5,9 @@ import { BaseSdk } from "./BaseSdk";
 export declare const userContextPaths: {
     contextInfo: string;
     updateContextInfo: string;
+    getUserTasks: string;
     addUserTasks: string;
+    checkUserTaskStatus: string;
     updateUserTasks: string;
     removeUserTask: string;
     listProfiles: string;

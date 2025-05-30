@@ -8,19 +8,21 @@ import { IUserContextSdk } from "../interface/user/IUserContextSdk";
 import { BaseSdk } from "./BaseSdk";
 
 export const userContextPaths = {
-  contextInfo: "/user/:accountId/data/info/get",
-  updateContextInfo: "/user/:accountId/data/info/update",
-  addUserTasks: "/user/:accountId/tasks/add",
-  updateUserTasks: "/user/:accountId/tasks/update",
-  removeUserTask: "/user/:accountId/tasks/remove",
-  listProfiles: "/user/:accountId/data/profiles/list",
-  removeProfilePermission: "/user/:accountId/data/profiles/remove",
-  updateProfilePermission: "/user/:accountId/data/profiles/update",
-  listAchievements: "/user/:accountId/data/achievements/list",
-  addAchievement: "/user/:accountId/data/achievements/add",
-  updateAchievement: "/user/:accountId/data/achievements/update",
-  removeAchievement: "/user/:accountId/data/achievements/remove",
-  toggleActive: "/user/:accountId/toggle-active",
+  contextInfo: "/data/info",
+  updateContextInfo: "/data/info/update",
+  getUserTasks: "/data/tasks",
+  addUserTasks: "/data/tasks/add",
+  checkUserTaskStatus: "/data/tasks/status/:taskAlias",
+  updateUserTasks: "/tasks/update",
+  removeUserTask: "/tasks/remove",
+  listProfiles: "/data/profiles/list",
+  removeProfilePermission: "/data/profiles/remove/:profileAlias",
+  updateProfilePermission: "/data/profiles/update/",
+  listAchievements: "/data/achievements",
+  addAchievement: "/data/achievements/add",
+  updateAchievement: "/data/achievements/update/:achievementAlias",
+  removeAchievement: "/data/achievements/remove/:achievementAlias",
+  toggleActive: "/toggle-active",
 };
 
 export class UserContextSdk extends BaseSdk implements IUserContextSdk {

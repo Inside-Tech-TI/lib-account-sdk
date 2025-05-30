@@ -8,6 +8,7 @@ import {
   IUserCredentials,
   UserInteractions,
 } from "../interface/sdk/IUser";
+import { userContextPaths } from "./UserContextSdk";
 
 // TODO: Testar
 export class AccountSdk extends BaseSdk implements IAccountSDK {
@@ -25,13 +26,18 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     throw new Error("Method not implemented.");
   }
+  private getUserAccountPath(accountId: string): string {
+    return `/api/${this.app}/context/${this.context}/user/${accountId}`;
+  }
   async updateUserInfoByAccountId(
     accountId: string,
     userDetails: IUserAccountDetails
   ): Promise<IResult> {
     return (
       await this.axiosInstance.post(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/info/update`,
+        `${this.getUserAccountPath(accountId)}${
+          userContextPaths.updateContextInfo
+        }`,
         userDetails
       )
     ).data;
@@ -41,7 +47,7 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResultData<ContextUserInfo<T>>> {
     return (
       await this.axiosInstance.get(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/info`
+        `${this.getUserAccountPath(accountId)}${userContextPaths.contextInfo}`
       )
     ).data;
   }
@@ -50,7 +56,7 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResultData<UserInteractions>> {
     return (
       await this.axiosInstance.get(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks`
+        `${this.getUserAccountPath(accountId)}${userContextPaths.getUserTasks}`
       )
     ).data;
   }
@@ -60,7 +66,7 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     return (
       await this.axiosInstance.post(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks/add`,
+        `${this.getUserAccountPath(accountId)}${userContextPaths.addUserTasks}`,
         task
       )
     ).data;
@@ -69,25 +75,32 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
     accountId: string,
     taskAlias: string
   ): Promise<IResultData<string | undefined>> {
-    throw new Error("Method not implemented in account api.");
-    // return await this.axiosInstance.get(
-    //   `/api/${this.app}/context/${this.context}/user/${accountId}/data/tasks/status/${taskAlias}`
-    // );
+    return await this.axiosInstance.get(
+      `${this.getUserAccountPath(
+        accountId
+      )}${userContextPaths.checkUserTaskStatus.replace(
+        ":taskAlias",
+        taskAlias
+      )})`
+    );
   }
   async updateUserTasks(
     accountId: string,
     tasks: UserInteractions
   ): Promise<IResult> {
-    throw new Error("Method not implemented in account api.");
-    // return await this.getAxiosUser(jwtToken).post(
-    //   `/api/${this.app}/context/${this.context}/user/data/tasks/update`,
-    //   tasks
-    // );
+    return await this.axiosInstance.post(
+      `${this.getUserAccountPath(accountId)}${
+        userContextPaths.updateUserTasks
+      }`,
+      tasks
+    );
   }
-  async removeUserTask(jwtToken: string, taskAlias: string): Promise<IResult> {
+  async removeUserTask(accountId: string, taskAlias: string): Promise<IResult> {
     return (
-      await this.getAxiosUser(jwtToken).delete(
-        `/api/${this.app}/context/${this.context}/user/data/task/remove/${taskAlias}`
+      await this.axiosInstance.delete(
+        `${this.getUserAccountPath(
+          accountId
+        )}${userContextPaths.removeUserTask.replace(":taskAlias", taskAlias)}`
       )
     ).data;
   }
@@ -97,7 +110,12 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     return (
       await this.axiosInstance.delete(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/remove/${profileAlias}`
+        `${this.getUserAccountPath(
+          accountId
+        )}${userContextPaths.removeProfilePermission.replace(
+          ":profileAlias",
+          profileAlias
+        )}`
       )
     ).data;
   }
@@ -107,15 +125,17 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     return (
       await this.axiosInstance.post(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/profiles/update`,
+        `${this.getUserAccountPath(accountId)}${
+          userContextPaths.updateProfilePermission
+        }`,
         profiles
       )
     ).data;
   }
-  async listProfiles(jwtToken: string): Promise<IResultData<string[]>> {
+  async listProfiles(accountId: string): Promise<IResultData<string[]>> {
     return (
-      await this.getAxiosUser(jwtToken).get(
-        `/api/${this.app}/context/${this.context}/user/data/profiles`
+      await this.axiosInstance.get(
+        `${this.getUserAccountPath(accountId)}${userContextPaths.listProfiles}`
       )
     ).data;
   }
@@ -124,7 +144,9 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResultData<UserInteractions>> {
     return (
       await this.axiosInstance.get(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/list`
+        `${this.getUserAccountPath(accountId)}${
+          userContextPaths.listAchievements
+        }`
       )
     ).data;
   }
@@ -134,7 +156,9 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     return (
       await this.axiosInstance.post(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/add`,
+        `${this.getUserAccountPath(accountId)}${
+          userContextPaths.addAchievement
+        }`,
         achievement
       )
     ).data;
@@ -146,7 +170,12 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     return (
       await this.axiosInstance.put(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/update/${achievementAlias}`,
+        `${this.getUserAccountPath(
+          accountId
+        )}${userContextPaths.updateAchievement.replace(
+          ":achievementAlias",
+          achievementAlias
+        )}`,
         achievement
       )
     ).data;
@@ -157,13 +186,18 @@ export class AccountSdk extends BaseSdk implements IAccountSDK {
   ): Promise<IResult> {
     return (
       await this.axiosInstance.delete(
-        `/api/${this.app}/context/${this.context}/user/${accountId}/data/achievements/remove/${achievementAlias}`
+        `${this.getUserAccountPath(
+          accountId
+        )}${userContextPaths.removeAchievement.replace(
+          ":achievementAlias",
+          achievementAlias
+        )}`
       )
     ).data;
   }
   async toggleActive(accountId: string, active: boolean): Promise<IResult> {
     return await this.apiPost<IResult>(
-      `/api/${this.app}/context/${this.context}/user/${accountId}/toggle-active`,
+      `${this.getUserAccountPath(accountId)}${userContextPaths.toggleActive}`,
       { active }
     );
   }
