@@ -15,6 +15,7 @@ import { AccountSdk } from "./sdk/AccountSdk";
 import { AppSdk } from "./sdk/AppSdk";
 import { AccountMockSdk } from "./sdk/mocks/AccountMockSdk";
 import { AppMockSdk } from "./sdk/mocks/AppMockSdk";
+import { userContextPaths, UserContextSdk } from "./sdk/UserContextSdk";
 
 export {
   AccountSdk,
@@ -35,4 +36,6 @@ export {
   I2faInfo,
   UserContexts,
   OTPService,
+  UserContextSdk,
+  userContextPaths,
 };

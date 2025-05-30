@@ -7,4 +7,5 @@ import { AccountSdk } from "./sdk/AccountSdk";
 import { AppSdk } from "./sdk/AppSdk";
 import { AccountMockSdk } from "./sdk/mocks/AccountMockSdk";
 import { AppMockSdk } from "./sdk/mocks/AppMockSdk";
-export { AccountSdk, AppSdk, IAppSdk, IAccountSDK, AccountMockSdk, AppMockSdk, ContextUserInfo, IUserCredentials, IUserAccountDetails, IResult, IResultData, InteractionItem, UserInteractions, IContext, IProfile, I2faInfo, UserContexts, OTPService, };
+import { userContextPaths, UserContextSdk } from "./sdk/UserContextSdk";
+export { AccountSdk, AppSdk, IAppSdk, IAccountSDK, AccountMockSdk, AppMockSdk, ContextUserInfo, IUserCredentials, IUserAccountDetails, IResult, IResultData, InteractionItem, UserInteractions, IContext, IProfile, I2faInfo, UserContexts, OTPService, UserContextSdk, userContextPaths, };
