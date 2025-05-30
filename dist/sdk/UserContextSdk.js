@@ -14,9 +14,9 @@ const BaseSdk_1 = require("./BaseSdk");
 exports.userContextPaths = {
     contextInfo: "/data/info",
     updateContextInfo: "/data/info/update",
-    getUserTasks: "/tasks",
-    addUserTasks: "/tasks/add",
-    checkUserTaskStatus: "/tasks/status/:taskAlias",
+    getUserTasks: "/data/tasks",
+    addUserTasks: "/data/tasks/add",
+    checkUserTaskStatus: "/data/tasks/status/:taskAlias",
     updateUserTasks: "/tasks/update",
     removeUserTask: "/tasks/remove",
     listProfiles: "/data/profiles/list",

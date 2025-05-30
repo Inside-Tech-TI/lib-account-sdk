@@ -99,8 +99,8 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return yield this.apiPost(`${this.getUserAccountPath(accountId)}${UserContextSdk_1.userContextPaths.toggleActive}`, { active });
         });
     }
-    rememberPassword(login, timeoutInSeconds = 180) {
-        return __awaiter(this, void 0, void 0, function* () {
+    rememberPassword(login_1) {
+        return __awaiter(this, arguments, void 0, function* (login, timeoutInSeconds = 180) {
             return yield this.apiPost(`/public/forgot-password`, { login, timeoutInSeconds });
         });
     }
@@ -141,8 +141,8 @@ class AccountSdk extends BaseSdk_1.BaseSdk {
             return (yield axiosUser.post(`/auth/refresh-token`)).data;
         });
     }
-    createCredentials(credentials, userInContext, userDetails = {}) {
-        return __awaiter(this, void 0, void 0, function* () {
+    createCredentials(credentials_1, userInContext_1) {
+        return __awaiter(this, arguments, void 0, function* (credentials, userInContext, userDetails = {}) {
             return yield this.apiPost(`/api/${this.app}/context/${this.context}/user-credentials/create`, { credentials, userDetails, userInContext });
         });
     }

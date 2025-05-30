@@ -62,8 +62,8 @@ class AccountMockSdk {
         });
     }
     checkUserTaskStatus(accountId, taskAlias) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const user = this.getContextByToken(accountId);
             if (!user.tasks) {
                 return { success: true, data: undefined };
