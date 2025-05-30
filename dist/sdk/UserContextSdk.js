@@ -22,6 +22,7 @@ exports.userContextPaths = {
     listProfiles: "/data/profiles/list",
     removeProfilePermission: "/data/profiles/remove/:profileAlias",
     updateProfilePermission: "/data/profiles/update/",
+    deleteProfilePermission: "/data/profiles/delete/:profileAlias",
     listAchievements: "/data/achievements",
     addAchievement: "/data/achievements/add",
     updateAchievement: "/data/achievements/update/:achievementAlias",

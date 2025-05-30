@@ -13,6 +13,7 @@ export declare const userContextPaths: {
     listProfiles: string;
     removeProfilePermission: string;
     updateProfilePermission: string;
+    deleteProfilePermission: string;
     listAchievements: string;
     addAchievement: string;
     updateAchievement: string;
